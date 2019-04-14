@@ -1,4 +1,3 @@
-require('dotenv').config({ path: '../../' });
 const axios = require('axios');
 
 const {
