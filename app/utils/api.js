@@ -1,8 +1,12 @@
+require('dotenv').config({ path: '../../' });
 const axios = require('axios');
 
-const client_id = "YOUR_CLIENT_ID";
-const client_secret = "YOUR_SECRET_ID";
-const params = "?client_id=" + client_id + "&client_secret=" + client_secret;
+const {
+    CLIENT_ID,
+    CLIENT_SECRET
+    } = process.env;
+
+const params = "?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET;
 
 function getProfile(username) {
     return axios.get("https://api.github.com/users/" + username + params)
@@ -12,10 +16,7 @@ function getProfile(username) {
 }
 
 function getRepos(username) {
-    return axios.get("https://api.github.com/users/" + username + "/repos" + params + "&per_page=100")
-        .then(function(user) {
-
-        });
+    return axios.get("https://api.github.com/users/" + username + "/repos" + params + "&per_page=100");
 }
 
 function getStarCount(repos) {
