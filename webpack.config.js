@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const {
     CLIENT_ID,
-    CLIENT_SECRET
+    CLIENT_SECRET,
+    NODE_ENV
     } = process.env;
 
 module.exports = {
@@ -24,7 +25,7 @@ module.exports = {
     devServer: {
         historyApiFallback: true
     },
-    mode: 'development',
+    mode: NODE_ENV === 'production' ? 'production' : 'development',
     plugins: [
         new HtmlWebpackPlugin({
             template: './app/index.html'
