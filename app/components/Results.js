@@ -65,7 +65,7 @@ class Results extends React.Component {
             if (results === null) {
                 return this.setState(function() {
                     return {
-                        error: "Looks like there was an error. Check that both users exist on Github.",
+                        error: "Looks like there was an error. Check that both users exist on GitHub.",
                         loading: false
                     }
                 });
