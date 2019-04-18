@@ -6,9 +6,7 @@ const api = require('../utils/api');
 const PlayerPreview = require('./PlayerPreview');
 const Loading = require('./Loading');
 
-function Profile(props) {
-    const info = props.info;
-
+function Profile({ info }) {
     return (
         <PlayerPreview avatar={info.avatar_url} username={info.login}>
             <ul className="space-list-items">
@@ -28,12 +26,12 @@ Profile.propTypes = {
     info: PropTypes.object.isRequired
 }
 
-function Player(props) {
+function Player({ label, score, profile }) {
     return (
         <div>
-            <h1 className="header">{props.label}</h1>
-            <h3 style={{textAlign: "center"}}>Score: {props.score}</h3>
-            <Profile info={props.profile}/>
+            <h1 className="header">{label}</h1>
+            <h3 style={{textAlign: "center"}}>Score: {score}</h3>
+            <Profile info={profile}/>
         </div>
     )
 }
@@ -57,34 +55,27 @@ class Results extends React.Component {
         }
     }
     componentDidMount() {
-        const players = queryString.parse(this.props.location.search);
+        const { playerOneName, playerTwoName } = queryString.parse(this.props.location.search);
         api.battle([
-            players.playerOneName,
-            players.playerTwoName
-        ]).then(function(results) {
+            playerOneName,
+            playerTwoName
+        ]).then((results) => {
             if (results === null) {
-                return this.setState(function() {
-                    return {
-                        error: "Looks like there was an error. Check that both users exist on GitHub.",
-                        loading: false
-                    }
-                });
-            }
-            this.setState(function() {
-                return {
-                    winner: results[0],
-                    loser: results[1],
-                    error: null,
+                return this.setState(() => ({
+                    error: "Looks like there was an error. Check that both users exist on GitHub.",
                     loading: false
-                }
-            });
-        }.bind(this));
+                }));
+            }
+            this.setState(() => ({
+                winner: results[0],
+                loser: results[1],
+                error: null,
+                loading: false
+            }));
+        });
     }
     render() {
-        const winner = this.state.winner;
-        const loser = this.state.loser;
-        const error = this.state.error;
-        const loading = this.state.loading;
+        const { winner, loser, error, loading } = this.state;
 
         if (loading) {
             return <Loading />
