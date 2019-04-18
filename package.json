@@ -10,6 +10,7 @@
   "author": "никита",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.4.3",
     "axios": "^0.18.0",
     "dotenv": "^7.0.0",
     "prop-types": "^15.7.2",
